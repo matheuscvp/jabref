@@ -2,12 +2,12 @@ package org.jabref.logic.pdf;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 import org.jabref.model.pdf.FileAnnotation;
 import org.jabref.model.pdf.FileAnnotationType;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -141,6 +141,18 @@ public class PdfAnnotationImporterTest {
 
         assertEquals(Collections.singletonList(expected),
                 importer.importAnnotations(Path.of("src/test/resources/pdfs/minimal-polygon.pdf")));
+    }
+
+    @Test
+    public void invalidDocumentTypeTest() {
+        assertEquals(Collections.emptyList(), importer.importAnnotations(Path.of("src/test/resources/pdfs/teste.txt")));
+    }
+
+    @Test
+    public void normalTest() {
+        List list = new ArrayList();
+        list.add("Annotation One");
+        assertEquals(list , importer.importAnnotations(Path.of("src/test/resources/pdfs/example.pdf")));
     }
 }
 
